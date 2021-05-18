@@ -31,10 +31,10 @@ function App() {
   }
   return (
     <>
-      <Grid container direction="row" justify="start" alignItems="center">
+      <Grid container direction="row" justify="flex-start" alignItems="center">
         {users.map((user) => (
-          <Grid item xs={12} sm={6} md={4} lg={3} xl={4}>
-            <UserCard key={user.id} user={user} />
+          <Grid item xs={12} sm={6} md={4} lg={3} xl={4} key={user.id}>
+            <UserCard user={user} />
           </Grid>
         ))}
       </Grid>

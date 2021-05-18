@@ -26,8 +26,7 @@ const UserCard = ({ user }) => {
     <Card className={classes.root} variant="outlined">
       <CardContent>
         <Typography className={classes.header}> {user.name}</Typography>
-
-        <Typography color="textSecondary">
+        <Typography color="textSecondary" component={"div"}>
           <ul>
             <li> Street: {user.address.street}</li>
             <li>Suite: {user.address.suite}</li>
@@ -35,9 +34,7 @@ const UserCard = ({ user }) => {
             <li>Zipcode: {user.address.zipcode}</li>
           </ul>
         </Typography>
-        <Typography variant="body2" component="p">
-          {user.company.catchPhrase}
-        </Typography>
+        <Typography>{user.company.catchPhrase}</Typography>
       </CardContent>
     </Card>
   );
