@@ -1,10 +1,15 @@
 import React from "react";
 import SnackbarContent from "@material-ui/core/SnackbarContent";
 import { makeStyles } from "@material-ui/core/styles";
-import { fetchRepairDetails, hideAlert } from "../redux/actions";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
+import { useDispatch, useSelector } from "react-redux";
+import { hideAlert, fetchRepairs, fetchRepairDetails } from "../redux/actions";
+
 const useStyles = makeStyles({
+  container: {
+    margin: "2rem",
+  },
   bullet: {
     display: "inline-block",
     margin: "0 2px",
@@ -17,7 +22,6 @@ const useStyles = makeStyles({
     marginBottom: 12,
   },
   root: {
-    minWidth: 275,
     minWidth: "20rem",
     margin: "0.2rem",
     minHeight: "5vh",
@@ -44,16 +48,21 @@ const useStyles = makeStyles({
     },
   },
 });
-const Alert = ({ onReset, alert }) => {
+const Alert = () => {
   const classes = useStyles();
-
+  const dispatch = useDispatch();
+  const alert = useSelector((state) => state.app.alert);
+  const id = useSelector((state) => state.repairs.selectedRepairId);
+  if (!alert) {
+    return <></>;
+  }
   return (
     <Grid
       container
       direction="row"
       justify="center"
       alignItems="center"
-      style={{ margin: "2rem" }}
+      className={classes.container}
     >
       <SnackbarContent
         message={alert}
@@ -61,20 +70,23 @@ const Alert = ({ onReset, alert }) => {
           root: classes.snackbar,
         }}
         action={
-          <React.Fragment>
-            <Button
-              variant="contained"
-              color="primary"
-              classes={{
-                root: classes.buttonColor,
-              }}
-              onClick={() => {
-                onReset();
-              }}
-            >
-              Повторить запрос
-            </Button>
-          </React.Fragment>
+          <Button
+            variant="contained"
+            color="primary"
+            classes={{
+              root: classes.buttonColor,
+            }}
+            onClick={() => {
+              dispatch(hideAlert());
+              if (id) {
+                dispatch(fetchRepairDetails(id));
+              } else {
+                dispatch(fetchRepairs());
+              }
+            }}
+          >
+            Повторить запрос
+          </Button>
         }
       />
     </Grid>

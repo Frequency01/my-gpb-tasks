@@ -5,6 +5,7 @@ import {
   HIDE_LOADER,
   SHOW_ALERT,
   SHOW_LOADER,
+  SET_SELECTED_REPAIR_ID,
 } from "./types";
 
 export function showLoader() {
@@ -38,6 +39,12 @@ export function hideAlert() {
 export function fetchRepairDetails(id) {
   return {
     type: REQUEST_SELECTED_REPAIR,
+    payload: id,
+  };
+}
+export function setSelectedRepairId(id) {
+  return {
+    type: SET_SELECTED_REPAIR_ID,
     payload: id,
   };
 }

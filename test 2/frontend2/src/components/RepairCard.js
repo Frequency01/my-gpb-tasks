@@ -9,7 +9,7 @@ import CardMedia from "@material-ui/core/CardMedia";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   nameOfRepair: {
     fontSize: "1.5rem",
     textDecoration: "none",
@@ -38,9 +38,7 @@ const RepairCard = ({ repair }) => {
 
           <CardContent>
             <Typography gutterBottom variant="h5" component="h2">
-              <Link className={classes.nameOfRepair} to={`/${repair.id}`}>
-                {repair.name}
-              </Link>
+              {repair.name}
             </Typography>
           </CardContent>
         </CardActionArea>
