@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
-import { fetchRepairDetails, hideAlert } from "../redux/actions";
+import { fetchRepairDetails, setSelectedRepairId } from "../redux/actions";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
@@ -12,7 +12,6 @@ import CardMedia from "@material-ui/core/CardMedia";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import Alert from "./Alert";
 
 const useStyles = makeStyles({
   bullet: {
@@ -27,7 +26,6 @@ const useStyles = makeStyles({
     marginBottom: 12,
   },
   root: {
-    minWidth: 275,
     minWidth: "20rem",
     margin: "0.2rem",
     minHeight: "5vh",
@@ -56,27 +54,16 @@ const useStyles = makeStyles({
 });
 
 const RepairDetails = () => {
-  let { id } = useParams();
+  const { id } = useParams();
   const classes = useStyles();
   const dispatch = useDispatch();
   const repair = useSelector((state) => state.repairs.selectedRepair);
-  const alert = useSelector((state) => state.app.alert);
   const isLoading = useSelector((state) => state.app.loading);
   useEffect(() => {
+    dispatch(setSelectedRepairId(id));
     dispatch(fetchRepairDetails(id));
-  }, []);
+  }, [id]);
 
-  if (alert) {
-    return (
-      <Alert
-        onReset={() => {
-          dispatch(hideAlert());
-          dispatch(fetchRepairDetails());
-        }}
-        alert={alert}
-      />
-    );
-  }
   if (isLoading) {
     return (
       <Grid container direction="column" justify="center" alignItems="center">
